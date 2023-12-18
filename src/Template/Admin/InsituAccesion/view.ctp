@@ -1,0 +1,192 @@
+
+<?php $this->assign('title', $mod_title); ?>
+
+<!-- Page Content -->
+<section class="content-header">
+    <h1>Módulo <?php echo $mod_modulo ?> - <?php echo $mod_title ?></h1>
+
+    <?php
+        $this->Html->addCrumb('Conservación In Situ', ['controller' => 'Insitu', 'action' => 'index']);
+        $this->Html->addCrumb($insitu->code_insitu, ['controller' => 'InsituAccesion', 'action' => 'index', 'idx' => $insitu->id]);
+        $this->Html->addCrumb('Accesiones', ['controller' => 'InsituAccesion', 'action' => 'index', 'idx' => $insitu->id]);
+        $this->Html->addCrumb($insituAccesion->id, ['controller' => 'InsituAccesion', 'action' => 'view', 'idx' => $insitu->id, 'id' => $insituAccesion->id]);
+        $this->Html->addCrumb('Ver');
+
+        echo $this->Html->getCrumbList(
+            [
+                'firstClass' => false,
+                'lastClass'  => 'active',
+                'class'      => 'breadcrumb',
+                'escape'     => false
+            ],
+            '<i class="fa fa-home"></i> Inicio'
+        );
+    ?>
+</section>
+<!-- /Page Breadcrumb -->
+
+
+<!-- Page Body -->
+<div class="content">
+    <div class="row">
+        <div class="col-xs-12 col-md-12 col-lg-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><strong><?= __('DATOS GENERALES') ?></strong></h3>
+                    <div class="pull-right box-tools">
+                    <?php if ($permiso['edit']) { ?>
+                        <?php echo $this->Html->link('<i class="fa fa-edit" ></i>',
+                                    ['controller' => 'InsituAccesion', 'action' => 'edit', 'idx' => $insituAccesion->insitu_id, 'id' => $insituAccesion->id],
+                                    ['class' => 'btn btn-primary','data-toggle'=> "tooltip",  'title'=> "Editar", 'escape'=>false] );?>
+                    <?php } ?>
+                    <?php if ($permiso['delete']) { ?>
+                        <?php echo $this->Html->link('<i class="fa fa-trash" ></i>', "#",['class' => 'btn btn-danger delete-btn','data-toggle'=> "tooltip",  'title'=> "Eliminar",'escape' => false, "data-id"=>$insituAccesion->id])?>
+                    <?php } ?>
+
+                        <?php echo $this->Html->link('<i class="fa fa-arrow-left" ></i>',
+                                ['controller' => 'InsituAccesion', 'action' => 'index', 'idx' => $insituAccesion->insitu_id],
+                                ['class' => 'btn  btn-default', 'data-toggle'=> "tooltip",  'title'=> "Regresar", 'escape'=>false])
+                        ?>
+
+                    </div>
+                    <br>
+                </div>
+                <?php
+                        $result='';
+                        if($insituAccesion->wild_relatives==1) $result='SI';
+                        if($insituAccesion->wild_relatives==2) $result='NO';
+
+                 ?>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <tr>
+                                        <th scope="row"><?= __('Código In Situ') ?></th>
+                                        <td><?= $insituAccesion->insitu->code_insitu ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?= __('Código PER') ?></th>
+                                        <td><?= h($insituAccesion->accenumb) ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?= __('Código Accesión') ?></th>
+                                        <td><?= h($insituAccesion->othenumb) ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?= __('Nombre Común') ?></th>
+                                        <td><?= h($insituAccesion->common_name) ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?= __('Parientes Silvestres') ?></th>
+                                        <td><?= h($result) ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?= __('Colector') ?></th>
+                                        <td><?= h($insituAccesion->manifold) ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?= __('Uso Reportado') ?></th>
+                                        <td><?= h($insituAccesion->reported_usage) ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?= __('Extensión') ?></th>
+                                        <td><?= h($insituAccesion->extension) ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?= __('Área Cultivo (m2)') ?></th>
+                                        <td><?= h($insituAccesion->area_cultivation) ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?= __('Otros') ?></th>
+                                        <td><?= $insituAccesion->others ?></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"><strong>Parientes Silvestres</strong></h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover">
+
+                                            <tr>
+                                                <th scope="row"><?= __('Nombre Científico') ?></th>
+                                                <td><?= h($insituAccesion->scientific_name) ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><?= __('Usos') ?></th>
+                                                <td><?= h($insituAccesion->uso) ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><?= __('Nombre Local') ?></th>
+                                                <td><?= h($insituAccesion->local_name) ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><?= __('Habitat') ?></th>
+                                                <td><?= h($insituAccesion->habitat) ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><?= __('Referencias') ?></th>
+                                                <td><?= $insituAccesion->reference ?></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="col-sm-12 text-center">
+                    <?php if ($permiso['edit']) { ?>
+                        <?php echo $this->Html->link('EDITAR', ['controller' => 'InsituAccesion', 'action' => 'edit', 'idx' => $insituAccesion->insitu_id, 'id' => $insituAccesion->id], ['class' => 'btn btn-primary'] ); ?>
+                    <?php } ?>
+                    <?php if ($permiso['delete']) { ?>
+                        <?php echo $this->Html->link('ELIMINAR', "#",['class' => 'btn btn-danger delete-btn', 'escape' => false, "data-id"=>$insituAccesion->id])?>
+                    <?php } ?>
+
+                        <?php echo $this->Html->link('REGRESAR',['controller' => 'InsituAccesion', 'action' => 'index', 'idx' => $insituAccesion->insitu_id], ['class' => 'btn  btn-default']) ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal  -->
+<a data-target="#ConfirmDelete" role="button" data-toggle="modal" id="trigger"></a>
+<div class="modal fade" id="ConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title text-center" id="myModalLabel"><strong>MENSAJE</strong></h4>
+            </div>
+            <div class="modal-body">
+                ¿Desea eliminar el registro actual?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal">Cancelar</button>
+                <div id="ajax_button"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php $url = $this->Html->link('Confirmar', ['controller' => 'InsituAccesion', 'action' => 'delete', 'idx' => $insituAccesion->insitu_id,'id' => $insituAccesion->id], ['class' => 'btn btn-success btn-flat btnEliminar' ]) ?>
+
+<script>
+    $(".delete-btn").click(function(){
+        $("#ajax_button").html('<?php echo $url ?>');
+        $("#trigger").click();
+    });
+</script>

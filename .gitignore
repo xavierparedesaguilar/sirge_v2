@@ -1,0 +1,15 @@
+/vendor/*
+/config/app.php
+/tmp/*
+/logs/*
+composer.lock
+/webroot/gestion_inventario/
+webroot/pass_fitogenetico/*
+/webroot/pass_microorganismo/
+/webroot/pass_zoogenetico/
+webroot/publicacion/*
+webroot/reportes/*
+webroot/reportes/
+webroot/zabd/*
+tests
+tmp/*.sqlite
